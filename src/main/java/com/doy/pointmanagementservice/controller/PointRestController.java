@@ -19,4 +19,9 @@ public class PointRestController {
         pointService.savePointHistories(reviewDto, loginUser);
         return new ResponseEntity(HttpStatus.CREATED);
     }
+
+    @GetMapping
+    public ResponseEntity getPoint(User loginUser) {
+        return ResponseEntity.ok().body(pointService.getPoint(loginUser));
+    }
 }

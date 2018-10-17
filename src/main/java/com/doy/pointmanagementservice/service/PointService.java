@@ -114,4 +114,8 @@ public class PointService {
         // connection of reviews and newly stored point history is required.
         // connection of login user and newly stored point history is required.
     }
+
+    public int getPoint(User loginUser) {
+        return loginUser.getPoint();
+    }
 }
