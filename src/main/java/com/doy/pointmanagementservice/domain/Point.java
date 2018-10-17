@@ -6,6 +6,9 @@ import lombok.Getter;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "point",
+        indexes = {@Index(name = "review_point_index", columnList = "review_id", unique = true),
+                @Index(name = "user_point_index", columnList = "user_id", unique = true)})
 @Getter
 public class Point {
     @Id
@@ -26,10 +29,16 @@ public class Point {
     @JoinColumn(name = "review_id")
     private Review review;
 
-    public Point(PointType type, int value, User user, Review review) {
+    public Point(PointType type, int value) {
         this.type = type;
         this.value = value;
+    }
+
+    public void addUser(User user) {
         this.user = user;
+    }
+
+    public void addReview(Review review) {
         this.review = review;
     }
 }

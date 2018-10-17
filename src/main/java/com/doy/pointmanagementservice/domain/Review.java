@@ -42,5 +42,9 @@ public class Review {
     private Place place;
 
     @OneToMany(mappedBy = "review")
-    private List<Point> points = new ArrayList<>();
+    private List<Point> pointHistories = new ArrayList<>();
+
+    public void addPointHistory(Point pointHistory) {
+        this.pointHistories.add(pointHistory);
+    }
 }
