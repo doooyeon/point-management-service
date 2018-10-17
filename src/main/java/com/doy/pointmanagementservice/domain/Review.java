@@ -1,5 +1,6 @@
 package com.doy.pointmanagementservice.domain;
 
+import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
 public class Review {
     @Id
     private String id;
@@ -38,4 +40,7 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "place_id")
     private Place place;
+
+    @OneToMany(mappedBy = "review")
+    private List<Point> points = new ArrayList<>();
 }

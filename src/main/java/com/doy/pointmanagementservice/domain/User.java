@@ -1,10 +1,13 @@
 package com.doy.pointmanagementservice.domain;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
 public class User {
     @Id
     private String id;

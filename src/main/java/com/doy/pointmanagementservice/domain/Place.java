@@ -1,9 +1,12 @@
 package com.doy.pointmanagementservice.domain;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Getter
 public class Place {
     @Id
     private String id;
