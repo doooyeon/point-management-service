@@ -40,20 +40,17 @@ public class PointService {
 
     private void savePointWhenAddReview(Review review, User loginUser) {
         if (review.getContent().length() > 1) {
-            pointRepository.save(new Point(PointType.CONTENT_TEXT, 1));
+            savePointHistory(new Point(PointType.CONTENT_TEXT, 1), review, loginUser);
         }
 
         if (!review.getReviewPhotos().isEmpty()) {
-            pointRepository.save(new Point(PointType.CONTENT_PHOTO, 1));
+            savePointHistory(new Point(PointType.CONTENT_PHOTO, 1), review, loginUser);
         }
 
         List<Review> reviewList = reviewRepository.findByPlaceIdAndDeletedFalse(review.getPlace().getId());
         if (reviewList.isEmpty()) {
-            pointRepository.save(new Point(PointType.BONUS, 1));
+            savePointHistory(new Point(PointType.BONUS, 1), review, loginUser);
         }
-
-        // connection of reviews and newly stored point history is required.
-        // connection of login user and newly stored point history is required.
     }
 
     private void savePointWhenModifyReview(Review review, User loginUser) {
@@ -70,19 +67,16 @@ public class PointService {
         }
 
         if (contentTextPoint == 1 && review.getContent().length() < 1) {
-            pointRepository.save(new Point(PointType.CONTENT_TEXT, -1));
+            savePointHistory(new Point(PointType.CONTENT_TEXT, -1), review, loginUser);
         } else if (contentTextPoint == 0 && review.getContent().length() > 1) {
-            pointRepository.save(new Point(PointType.CONTENT_TEXT, 1));
+            savePointHistory(new Point(PointType.CONTENT_TEXT, 1), review, loginUser);
         }
 
         if (contentPhotoPoint == 1 && review.getReviewPhotos().isEmpty()) {
-            pointRepository.save(new Point(PointType.CONTENT_PHOTO, -1));
+            savePointHistory(new Point(PointType.CONTENT_PHOTO, -1), review, loginUser);
         } else if (contentPhotoPoint == 0 && !review.getReviewPhotos().isEmpty()) {
-            pointRepository.save(new Point(PointType.CONTENT_PHOTO, 1));
+            savePointHistory(new Point(PointType.CONTENT_PHOTO, 1), review, loginUser);
         }
-
-        // connection of reviews and newly stored point history is required.
-        // connection of login user and newly stored point history is required.
     }
 
     private void savePointWhenDeleteReview(Review review, User loginUser) {
@@ -102,17 +96,22 @@ public class PointService {
         }
 
         if (contentTextPoint == 1) {
-            pointRepository.save(new Point(PointType.CONTENT_TEXT, -1));
+            savePointHistory(new Point(PointType.CONTENT_TEXT, -1), review, loginUser);
         }
         if (contentPhotoPoint == 1) {
-            pointRepository.save(new Point(PointType.CONTENT_PHOTO, -1));
+            savePointHistory(new Point(PointType.CONTENT_PHOTO, -1), review, loginUser);
         }
         if (bonusPoint == 1) {
-            pointRepository.save(new Point(PointType.BONUS, -1));
+            savePointHistory(new Point(PointType.BONUS, -1), review, loginUser);
         }
+    }
 
-        // connection of reviews and newly stored point history is required.
-        // connection of login user and newly stored point history is required.
+    private void savePointHistory(Point pointHistory, Review review, User user) {
+        pointRepository.save(pointHistory);
+        review.addPointHistory(pointHistory);
+        user.addPointHistory(pointHistory);
+        pointHistory.addReview(review);
+        pointHistory.addUser(user);
     }
 
     public List<Point> getPointHistories(User loginUser) {
