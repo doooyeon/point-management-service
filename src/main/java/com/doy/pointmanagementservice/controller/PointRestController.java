@@ -14,23 +14,21 @@ public class PointRestController {
     @Autowired
     private PointService pointService;
 
-    @PostMapping("/histories")
+    // 개인 포인트 적립
+    @PostMapping
     public ResponseEntity savePointHistories(@RequestBody ReviewDTO reviewDto, User loginUser) { // stored in the session
         pointService.savePointHistories(reviewDto, loginUser);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
+    // 개인 포인트 부여 히스토리 조회
     @GetMapping
-    public ResponseEntity getPoint(User loginUser) {
-        return ResponseEntity.ok().body(pointService.getPoint(loginUser));
-    }
-
-    @GetMapping("/histories")
     public ResponseEntity getPointHistories(User loginUser) {
         return ResponseEntity.ok().body(pointService.getPointHistories(loginUser));
     }
 
-    @GetMapping("/histories/all")
+    // 전체 포인트 부여 히스토리 조회
+    @GetMapping("/all")
     public ResponseEntity getAllPointHistories() {
         return ResponseEntity.ok().body(pointService.getAllPointHistories());
     }

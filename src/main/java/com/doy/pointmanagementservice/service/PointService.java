@@ -115,10 +115,6 @@ public class PointService {
         // connection of login user and newly stored point history is required.
     }
 
-    public int getPoint(User loginUser) {
-        return loginUser.getPoint();
-    }
-
     public List<Point> getPointHistories(User loginUser) {
         return loginUser.getPointHistories();
     }
