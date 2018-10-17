@@ -118,4 +118,8 @@ public class PointService {
     public int getPoint(User loginUser) {
         return loginUser.getPoint();
     }
+
+    public List<Point> getPointHistories(User loginUser) {
+        return loginUser.getPointHistories();
+    }
 }
