@@ -29,4 +29,9 @@ public class PointRestController {
     public ResponseEntity getPointHistories(User loginUser) {
         return ResponseEntity.ok().body(pointService.getPointHistories(loginUser));
     }
+
+    @GetMapping("/histories/all")
+    public ResponseEntity getAllPointHistories() {
+        return ResponseEntity.ok().body(pointService.getAllPointHistories());
+    }
 }

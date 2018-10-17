@@ -122,4 +122,8 @@ public class PointService {
     public List<Point> getPointHistories(User loginUser) {
         return loginUser.getPointHistories();
     }
+
+    public List<Point> getAllPointHistories() {
+        return pointRepository.findAll();
+    }
 }
