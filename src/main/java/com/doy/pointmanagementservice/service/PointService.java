@@ -106,7 +106,8 @@ public class PointService {
         }
     }
 
-    private void savePointHistory(Point pointHistory, Review review, User user) {
+    @Transactional
+    public void savePointHistory(Point pointHistory, Review review, User user) {
         pointRepository.save(pointHistory);
         review.addPointHistory(pointHistory);
         user.addPointHistory(pointHistory);

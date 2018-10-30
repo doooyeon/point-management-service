@@ -12,6 +12,8 @@ import java.util.List;
 
 @Entity
 @Getter
+@Table(name = "review",
+        indexes = {@Index(name = "place_review_index", columnList = "place_id", unique = true)})
 public class Review {
     @Id
     private String id;

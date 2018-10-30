@@ -35,7 +35,8 @@
         writer_id varchar(255),
         PRIMARY KEY (id),
         FOREIGN KEY (place_id) REFERENCES place (id),
-        FOREIGN KEY (writer_id) REFERENCES user (id)
+        FOREIGN KEY (writer_id) REFERENCES user (id),
+        UNIQUE INDEX place_review_index (place_id)
     );
     ```
 - **ReviewPhoto**
@@ -59,7 +60,7 @@
         PRIMARY KEY (id),
         FOREIGN KEY (review_id) REFERENCES review (id),
         FOREIGN KEY (user_id) REFERENCES user (id),
-        UNIQUE INDEX review_point_index ( review_id ),
+        UNIQUE INDEX review_point_index (review_id),
         UNIQUE INDEX user_point_index (user_id)
     );
     ```
